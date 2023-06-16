@@ -1,3 +1,4 @@
+import allure
 import pytest
 from selenium import webdriver
 import time
@@ -54,16 +55,25 @@ def pytest_runtest_makereport(item):
     extra = getattr(report, 'extra', [])
 
     if report.when == 'call' or report.when == "setup":
+        current_directory = os.getcwd()
+        timestamp = int(time.time() * 1000)
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
-            current_directory = os.getcwd()
-            file_name = current_directory + report.nodeid.replace("::", "_").replace("/", "_") + ".png"
+            file_name = current_directory + report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
             _capture_screenshot(file_name)
             if file_name:
                 html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
                        'onclick="window.open(this.src)" align="right"/></div>' % file_name
                 extra.append(pytest_html.extras.html(html))
+
+            allure.attach(
+                driver.get_screenshot_as_png(),
+                name=report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp),
+                attachment_type=allure.attachment_type.PNG)
+
         report.extra = extra
+
+
 
 
 def _capture_screenshot(name):
