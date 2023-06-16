@@ -46,6 +46,7 @@ jobs:
       if: success() || failure()
       run: |
         mkdir reports_allure
+        touch reports_allure hello.txt
         allure generate reports  -o reports_allure
     - name: Upload Test Report
       uses: actions/upload-artifact@v3
