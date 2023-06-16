@@ -50,4 +50,6 @@ jobs:
       if: success() || failure()
       with:
         name: test-report
-        path: reports
+        path: |
+          reports
+          reports-allure
