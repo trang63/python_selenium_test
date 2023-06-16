@@ -47,6 +47,8 @@ jobs:
       run: |
         mkdir reports_allure
         touch reports_allure hello.txt
+        ls reports_allure
+        pwd
         allure generate reports  -o reports_allure
     - name: Upload Test Report
       uses: actions/upload-artifact@v3
