@@ -36,7 +36,11 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -k home3 --html=reports/report.html
+        pytest -k home3 --html=reports/basic-report.html  --alluredir=reports ./tests
+    - name: Generate Allure Report
+      run: |
+        mkdir reports_allure
+        allure generate reports  -o reports_allure
     - name: Upload Test Report
       uses: actions/upload-artifact@v3
       if: success() || failure()
