@@ -59,7 +59,7 @@ def pytest_runtest_makereport(item):
         timestamp = int(time.time() * 1000)
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
-            file_name = current_directory + report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
+            file_name = current_directory + "/" + report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
             _capture_screenshot(file_name)
             if file_name:
                 html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
