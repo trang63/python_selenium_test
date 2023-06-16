@@ -35,4 +35,4 @@ class CheckoutPage(Page):
         assert beforeQuantity + 1 == afterQuantity, "{} and {}".format(beforeQuantity, afterQuantity)
         price = float(self.driver.find_element(*CheckoutPage.itemPrice).text[1:])
         totalPrice = float(self.driver.find_element(*CheckoutPage.totalItemPrice).text[1:])
-        assert totalPrice == price * afterQuantity + 1, "Price is {} and quantity is {} and total is {}".format(price,afterQuantity,totalPrice)
+        assert totalPrice == price * afterQuantity, "Price is {} and quantity is {} and total is {}".format(price,afterQuantity,totalPrice)
