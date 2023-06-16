@@ -28,6 +28,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         pip install -r requirement.txt
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Install allure-commandline
+      run: npm install -g allure-commandline
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -37,8 +43,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -k home3 --html=reports/basic-report.html  --alluredir=reports ./tests
-    - name: Generate Allure Report
-      run: |
         mkdir reports_allure
         allure generate reports  -o reports_allure
     - name: Upload Test Report
