@@ -1,0 +1,10 @@
+.idea/
+.DS_Store/
+.pytest_cache/
+assets/
+log/
+reports/
+venv/
+*.log
+template_python_selenium.iml
+
