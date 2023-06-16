@@ -44,17 +44,10 @@ jobs:
       run: pytest -k home3 --html=reports/basic-report.html  --alluredir=reports ./tests
     - name: Generate Allure report
       if: success() || failure()
-      run: |
-        mkdir reports_allure
-        touch reports_allure hello.txt
-        ls reports_allure
-        pwd
-        allure generate reports  -o reports_allure
+      run: allure generate reports  -o reports_allure
     - name: Upload Test Report
       uses: actions/upload-artifact@v3
       if: success() || failure()
       with:
         name: test-report
-        path: |
-          reports
-          reports-allure
+        path: reports_allure
