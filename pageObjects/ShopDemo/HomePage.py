@@ -1,18 +1,8 @@
-import inspect
-
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from pageObjects.ShopDemo.CheckoutPage import CheckoutPage
 from pageObjects.ShopDemo.CommonPage import CommonPage as Page
 from pageObjects.ShopDemo.AddToCartPage import AddToCartPage
-
-import logging
-import logging.config
-
-# Load the logging configuration from the file
-logging.config.fileConfig('logging_config.ini')
-logger = logging.getLogger("mylogger")
-logger.propagate = False
 
 
 class HomePage(Page):
@@ -31,7 +21,7 @@ class HomePage(Page):
     def goToPage(self):
         self.driver.get("https://shop.demoqa.com/")
         self.driver.maximize_window()
-        logger.info("This is an info log message")
+        self.logger.info("This is an info log message")
 
     def search(self, search_str):
         self.driver.find_element(*HomePage.searchIcon).click()

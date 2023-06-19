@@ -9,16 +9,16 @@ import logging.config
 
 
 class CommonPage:
-
     # Load the logging configuration from the file
     logging.config.fileConfig('logging_config.ini')
-    log = logging.getLogger("mylogger")
+    logger = logging.getLogger("root")
+    logger.propagate = False
 
     def __init__(self, driver):
         self.driver = driver
 
     def getLogger(self):
-        return self.log
+        return self.logger
 
     def verifyLinkPresence(self, text):
         element = WebDriverWait(self.driver, 10).until(
