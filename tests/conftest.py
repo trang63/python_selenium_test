@@ -9,6 +9,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import os
+
 driver = None
 
 
@@ -59,8 +60,9 @@ def pytest_runtest_makereport(item):
         timestamp = int(time.time() * 1000)
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
-            file_name = current_directory + report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
-            _capture_screenshot(file_name)
+            folder_dir = os.path.dirname(item.config.option.htmlpath)
+            file_name = report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
+            _capture_screenshot(folder_dir+"/"+file_name)
             if file_name:
                 html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
                        'onclick="window.open(this.src)" align="right"/></div>' % file_name
@@ -72,8 +74,6 @@ def pytest_runtest_makereport(item):
                 attachment_type=allure.attachment_type.PNG)
 
         report.extra = extra
-
-
 
 
 def _capture_screenshot(name):
