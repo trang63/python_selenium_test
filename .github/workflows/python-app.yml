@@ -64,8 +64,8 @@ jobs:
     - name: Commit and Push Changes to Destination Repository
       run: |
         cd destination-repo
-        git config user.name "trang63"
-        git config user.email "thantrang0603@gmail.com"
+        git config --global user.name "trang63"
+        git config --global user.email "thantrang0603@gmail.com"
         git add .
         git commit -m "Upload Allure Report"
         git push
