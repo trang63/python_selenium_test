@@ -46,7 +46,7 @@ jobs:
     - name: Generate Allure report
       if: success() || failure()
       run: allure generate reports  -o reports_allure
-    - name: Upload Test Report
+    - name: Upload Test Report as Zip File
       uses: actions/upload-artifact@v3
       if: success() || failure()
       with:
@@ -54,3 +54,10 @@ jobs:
         path: |
           reports_allure
           reports
+    - name: Upload Allure Report to Web Server
+      uses: actions/upload-artifact@v2
+      with:
+        name: Allure Report
+        path: reports_allure
+        repository: trang63/allure_report
+
