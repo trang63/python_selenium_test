@@ -54,10 +54,18 @@ jobs:
         path: |
           reports_allure
           reports
-    - name: Upload Allure Report to Web Server
-      uses: actions/upload-artifact@v2
-      with:
-        name: Allure Report
-        path: reports_allure
-        repository: trang63/allure_report
+    - name: Clone destination repository
+      run: |
+        git clone https://github.com/trang63/allure_report.git destination-repo
+    - name: Copy Allure Report to Destination Repository
+      run: |
+        cp -R ./reports_allure/* destination-repo
+    - name: Commit and Push Changes to Destination Repository
+      run: |
+        cd destination-repo
+        git config user.name "trang63"
+        git config user.email "thantrang0603@gmail.com"
+        git add .
+        git commit -m "Upload Allure Report"
+        git push
 
