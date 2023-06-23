@@ -68,5 +68,5 @@ jobs:
         git config --global user.email "thantrang0603@gmail.com"
         git add .
         git commit -m "Upload Allure Report"
-        git push
+        git push https://${{ secrets.ACCESS_KEY }}@github.com/trang63/allure_report.git
 
