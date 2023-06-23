@@ -17,9 +17,9 @@ class AddToCartPage(Page):
     def addToCart(self):
         self.wait_for_element_appear(AddToCartPage.addToWishList)
         colorSel = Select(self.driver.find_element(*AddToCartPage.colorOption))
-        colorSel.select_by_index(1)
+        colorSel.select_by_value("white")
         sizeSel = Select(self.driver.find_element(*AddToCartPage.sizeOption))
-        sizeSel.select_by_index(1)
+        sizeSel.select_by_value("large")
         self.driver.find_element(*AddToCartPage.addToCartBtn).click()
         return CheckoutPage(self.driver)
 
