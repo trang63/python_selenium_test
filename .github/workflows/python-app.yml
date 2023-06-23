@@ -55,6 +55,7 @@ jobs:
           reports_allure
           reports
     - name: Clone destination repository
+      if: success() || failure()
       run: |
         git clone https://github.com/trang63/allure_report.git destination-repo
     - name: Copy Allure Report to Destination Repository
