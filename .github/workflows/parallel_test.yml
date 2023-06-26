@@ -89,7 +89,7 @@ jobs:
                 "fields": [
                   {
                     "type": "mrkdwn",
-                    "text": "*Testsuit:*\n Regression""
+                    "text": "*Testsuit:*\n Regression"
                   },
                   {
                     "type": "mrkdwn",
