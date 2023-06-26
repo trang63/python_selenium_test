@@ -88,7 +88,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Find Report here: https://trang63.github.io/allure_report/${{ env.my_variable }}"
+                  "text": "Find Report here: https://trang63.github.io/allure_report/${{ env.folder_name }}"
                 }
               }
             ]
