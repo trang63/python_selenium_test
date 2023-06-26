@@ -66,8 +66,7 @@ jobs:
         mkdir "destination-repo/$folder_name"
         cp -R ./reports_allure/* "destination-repo/$folder_name"
         echo "folder_name=$folder_name" >> $GITHUB_ENV
-        current_datetime = $(date +%Y-%m-%d %H:%M:%S)
-        echo "date_time=$current_datetime" >> $GITHUB_ENV
+        echo "current_datetime=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
     - name: Commit and Push Changes to Destination Repository
       if: success() || failure()
       run: |
