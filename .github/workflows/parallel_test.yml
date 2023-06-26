@@ -13,7 +13,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -77,16 +77,22 @@ jobs:
         git push https://${{ secrets.ACCESS_KEY }}@github.com/trang63/allure_report.git
     - name: Notify slack
       if: success() || failure()
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        # For posting a rich message using Block Kit
+        payload: |
+          {
+            "text": "GitHub Action build status: ${{ steps.test.conclusion }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "Find Report here: https://trang63.github.io/allure_report/${{ steps.set_variable.outputs.report_name }} }}"
+                }
+              }
+            ]
+          }
       env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: ${{ steps.test.conclusion }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: |
-          'Post Content :rocket: https://trang63.github.io/allure_report/${{ steps.set_variable.outputs.report_name }}'
-          ':rocket: ${{steps.test.outputs}}'
-        SLACK_TITLE: Post Title
-        SLACK_USERNAME: rtCamp
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_FOOTER: ""
-        MSG_MINIMAL: actions url
-      uses: rtCamp/action-slack-notify@master
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
