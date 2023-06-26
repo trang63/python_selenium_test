@@ -60,7 +60,8 @@ jobs:
         git clone https://github.com/trang63/allure_report.git destination-repo
     - name: Copy Allure Report to Destination Repository
       run: |
-        cp -R ./reports_allure/* destination-repo
+        mkdir destination-repo/first
+        cp -R ./reports_allure/* destination-repo/first
     - name: Commit and Push Changes to Destination Repository
       run: |
         cd destination-repo
