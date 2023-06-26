@@ -66,6 +66,8 @@ jobs:
         mkdir "destination-repo/$folder_name"
         cp -R ./reports_allure/* "destination-repo/$folder_name"
         echo "folder_name=$folder_name" >> $GITHUB_ENV
+        current_datetime = $(date +%Y-%m-%d %H:%M:%S)
+        echo "date_time=$current_datetime" >> $GITHUB_ENV
     - name: Commit and Push Changes to Destination Repository
       if: success() || failure()
       run: |
@@ -82,14 +84,27 @@ jobs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": "GitHub Action build status: ${{ steps.test.status }}",
             "blocks": [
               {
                 "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "Find Report here: https://trang63.github.io/allure_report/${{ env.folder_name }}"
-                }
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Testsuit:*\n Regression""
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Test Result:*\n${{ steps.test.outcome }}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*When:*\n${{ env.current_datetime }}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Report Link:*\nhttps://trang63.github.io/allure_report/${{ env.folder_name }}"
+                  }
+                ]
               }
             ]
           }
