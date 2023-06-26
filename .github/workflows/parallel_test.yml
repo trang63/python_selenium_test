@@ -43,7 +43,7 @@ jobs:
     - name: Generate Allure report
       if: success() || failure()
       run: allure generate reports  -o reports_allure
-    - name: Upload Test Report
+    - name: Upload Test Report as Zip File
       uses: actions/upload-artifact@v3
       if: success() || failure()
       with:
@@ -51,3 +51,24 @@ jobs:
         path: |
           reports_allure
           reports
+    - name: Clone destination repository
+      if: success() || failure()
+      run: |
+        git clone https://github.com/trang63/allure_report.git destination-repo
+    - name: Copy Allure Report to Destination Repository
+      if: success() || failure()
+      run: |
+        current_date=$(date +%Y-%m-%d)
+        current_time=$(date +%H-%M-%S)
+        folder_name="report_${current_date}_${current_time}"
+        mkdir "destination-repo/$folder_name"
+        cp -R ./reports_allure/* "destination-repo/$folder_name"
+    - name: Commit and Push Changes to Destination Repository
+      if: success() || failure()
+      run: |
+        cd destination-repo
+        git config --global user.name "trang63"
+        git config --global user.email "thantrang0603@gmail.com"
+        git add .
+        git commit -m "Upload Allure Report"
+        git push https://${{ secrets.ACCESS_KEY }}@github.com/trang63/allure_report.git
