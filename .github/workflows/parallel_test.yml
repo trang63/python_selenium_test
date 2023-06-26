@@ -39,6 +39,7 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
+      id: test
       run: pytest -n auto --dist loadfile  --html=reports/basic-report.html  --alluredir=reports ./tests
     - name: Generate Allure report
       if: success() || failure()
@@ -56,6 +57,7 @@ jobs:
       run: |
         git clone https://github.com/trang63/allure_report.git destination-repo
     - name: Copy Allure Report to Destination Repository
+      id: report
       if: success() || failure()
       run: |
         current_date=$(date +%Y-%m-%d)
@@ -63,6 +65,7 @@ jobs:
         folder_name="report_${current_date}_${current_time}"
         mkdir "destination-repo/$folder_name"
         cp -R ./reports_allure/* "destination-repo/$folder_name"
+        echo "::set-output name=report_name::$folder_name"
     - name: Commit and Push Changes to Destination Repository
       if: success() || failure()
       run: |
@@ -72,3 +75,18 @@ jobs:
         git add .
         git commit -m "Upload Allure Report"
         git push https://${{ secrets.ACCESS_KEY }}@github.com/trang63/allure_report.git
+    - name: Notify slack
+      if: success() || failure()
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ steps.test.conclusion }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: |
+          'Post Content :rocket: https://trang63.github.io/allure_report/${{ steps.set_variable.outputs.report_name }}'
+          ':rocket: ${{steps.test.outputs}}'
+        SLACK_TITLE: Post Title
+        SLACK_USERNAME: rtCamp
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: ""
+        MSG_MINIMAL: actions url
+      uses: rtCamp/action-slack-notify@master
