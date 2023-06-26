@@ -65,7 +65,7 @@ jobs:
         folder_name="report_${current_date}_${current_time}"
         mkdir "destination-repo/$folder_name"
         cp -R ./reports_allure/* "destination-repo/$folder_name"
-        echo "::set-output name=report_name::$folder_name"
+        echo "folder_name=$folder_name" >> $GITHUB_ENV
     - name: Commit and Push Changes to Destination Repository
       if: success() || failure()
       run: |
@@ -82,13 +82,13 @@ jobs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": "GitHub Action build status: ${{ steps.test.conclusion }}",
+            "text": "GitHub Action build status: ${{ steps.test.status }}",
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Find Report here: https://trang63.github.io/allure_report/${{ steps.set_variable.outputs.report_name }} }}"
+                  "text": "Find Report here: https://trang63.github.io/allure_report/${{ env.my_variable }}"
                 }
               }
             ]
