@@ -10,7 +10,6 @@ from selenium.common.exceptions import TimeoutException
 import logging.config
 
 
-
 @pytest.mark.usefixtures("setup")
 class BaseClass:
 

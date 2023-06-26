@@ -12,13 +12,16 @@ class AddToCartPage(Page):
     colorOption = (By.ID, "pa_color")
     sizeOption = (By.ID, "pa_size")
     addToCartBtn = (By.XPATH, "//button[contains(@class,'add_to_cart')]")
+    addToWishList = (By.XPATH, "//div[contains(@class,'summary')]//a[@data-title='Add to Wishlist']")
 
     def addToCart(self):
-        self.wait_for_element_appear(AddToCartPage.addToCartBtn)
+        self.wait_for_element_appear(AddToCartPage.addToWishList)
+        self.wait_for_element_appear(AddToCartPage.colorOption)
+        self.wait_for_element_appear(AddToCartPage.sizeOption)
         colorSel = Select(self.driver.find_element(*AddToCartPage.colorOption))
-        colorSel.select_by_index(1)
+        colorSel.select_by_value("white")
         sizeSel = Select(self.driver.find_element(*AddToCartPage.sizeOption))
-        sizeSel.select_by_index(1)
+        sizeSel.select_by_value("large")
         self.driver.find_element(*AddToCartPage.addToCartBtn).click()
         return CheckoutPage(self.driver)
 

@@ -4,9 +4,25 @@ This is template for an Automation project:
 - support Log
 - support Pytest
 - support Report file
+- support Parallel testing
+- support Github Action
 
 Install Package:
-pip install -r requirements.txt
+pip install -r requirement.txt
 
 Run Test:
 pytest -k <file_test> --html=reports/report.html
+
+Run Test with Pytest Html Report
+pytest -k <file_test> --html=reports/report.html
+
+Run Test with Allure Report
+pytest -k <file_test> --alluredir=reports ./tests
+
+(View rport by:
++ allure serve reports
+OR
++ allure generate reports  -o reports_allure)
+
+Run Parallel Test:
+pytest -n auto --dist loadfile  --html=reports/basic-report.html  --alluredir=reports ./tests -v -s
