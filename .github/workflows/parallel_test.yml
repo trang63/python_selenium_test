@@ -52,14 +52,10 @@ jobs:
         path: |
           reports_allure
           reports
-    - name: Clone destination repository
+    - name: Upload Alllure report to Webpage
       if: success() || failure()
       run: |
         git clone https://github.com/trang63/allure_report.git destination-repo
-    - name: Copy Allure Report to Destination Repository
-      id: report
-      if: success() || failure()
-      run: |
         current_date=$(date +%Y-%m-%d)
         current_time=$(date +%H-%M-%S)
         folder_name="report_${current_date}_${current_time}"
@@ -72,9 +68,6 @@ jobs:
         else
         echo "color=danger" >> $GITHUB_ENV
         fi
-    - name: Commit and Push Changes to Destination Repository
-      if: success() || failure()
-      run: |
         cd destination-repo
         git config --global user.name "trang63"
         git config --global user.email "thantrang0603@gmail.com"
@@ -90,7 +83,7 @@ jobs:
           {
             "attachments": [
               {
-                "color": "{{ env.color }}",
+                "color": "${{ env.color }}",
                 "blocks": [
                   {
                     "type": "section",
