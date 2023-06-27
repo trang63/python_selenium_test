@@ -52,7 +52,7 @@ jobs:
         path: |
           reports_allure
           reports
-    - name: Upload Alllure report to Webpage
+    - name: Upload Allure report to Webpage
       if: success() || failure()
       run: |
         git clone https://github.com/trang63/allure_report.git destination-repo
@@ -64,9 +64,9 @@ jobs:
         echo "folder_name=$folder_name" >> $GITHUB_ENV
         echo "current_datetime=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
         if [ "${{ steps.test.outcome }}" = "success" ]; then
-        echo "color=good" >> $GITHUB_ENV
+        echo "color=#36a64f" >> $GITHUB_ENV
         else
-        echo "color=danger" >> $GITHUB_ENV
+        echo "color=#ff0000" >> $GITHUB_ENV
         fi
         cd destination-repo
         git config --global user.name "trang63"
