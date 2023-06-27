@@ -65,8 +65,10 @@ jobs:
         echo "current_datetime=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
         if [ "${{ steps.test.outcome }}" = "success" ]; then
         echo "color=#36a64f" >> $GITHUB_ENV
+        echo "test_status=Pass" >> $GITHUB_ENV
         else
         echo "color=#ff0000" >> $GITHUB_ENV
+        echo "test_status=Fail" >> $GITHUB_ENV
         fi
         cd destination-repo
         git config --global user.name "trang63"
@@ -94,7 +96,7 @@ jobs:
                       },
                       {
                         "type": "mrkdwn",
-                        "text": "*Test Result:*\n${{ steps.test.outcome }}"
+                        "text": "*Test Result:*\n${{ env.test_status }}"
                       },
                       {
                         "type": "mrkdwn",
@@ -102,7 +104,7 @@ jobs:
                       },
                       {
                         "type": "mrkdwn",
-                        "text": "*Report Link:*\nhttps://trang63.github.io/allure_report/${{ env.folder_name }}"
+                        "text": "*Report Link:*\n<https://trang63.github.io/allure_report/${{ env.folder_name }}|Click here>"
                       }
                     ]
                   }
