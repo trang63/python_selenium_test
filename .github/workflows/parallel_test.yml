@@ -56,8 +56,9 @@ jobs:
       if: success() || failure()
       run: |
         git clone https://github.com/trang63/allure_report.git destination-repo
+        sudo systemsetup -settimezone "Asia/Ho_Chi_Minh"
         current_date=$(date +%Y-%m-%d)
-        current_time=$(date +%H-%M-%S)
+        current_time=$(date +%H-%M-%S)\ \($(date +%Z)\)
         folder_name="report_${current_date}_${current_time}"
         mkdir "destination-repo/$folder_name"
         cp -R ./reports_allure/* "destination-repo/$folder_name"
