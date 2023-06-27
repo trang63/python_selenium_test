@@ -67,6 +67,11 @@ jobs:
         cp -R ./reports_allure/* "destination-repo/$folder_name"
         echo "folder_name=$folder_name" >> $GITHUB_ENV
         echo "current_datetime=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+        if [ "${{ steps.test.outcome }}" = "success" ]; then
+        echo "color=good" >> $GITHUB_ENV
+        else
+        echo "color=danger" >> $GITHUB_ENV
+        fi
     - name: Commit and Push Changes to Destination Repository
       if: success() || failure()
       run: |
@@ -85,6 +90,7 @@ jobs:
           {
             "blocks": [
               {
+                "color": ${{ env.color }},
                 "type": "section",
                 "fields": [
                   {
