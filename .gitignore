@@ -4,7 +4,7 @@
 assets/
 log/
 reports/
+reports_allure/
 venv/
 *.log
 template_python_selenium.iml
-
