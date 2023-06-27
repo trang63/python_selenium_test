@@ -4,8 +4,9 @@ This is template for an Automation project:
 - support Log
 - support Pytest
 - support Report file
-- support Parallel testing
+- support Parallel testing (By pytest-xdist)
 - support Github Action
+    + support upload allure report to Github Page (Web server)
 
 Install Package:
 pip install -r requirement.txt
@@ -19,10 +20,10 @@ pytest -k <file_test> --html=reports/report.html
 Run Test with Allure Report
 pytest -k <file_test> --alluredir=reports ./tests
 
-(View rport by:
+View Allure report by:
 + allure serve reports
 OR
-+ allure generate reports  -o reports_allure)
++ allure generate reports  -o reports_allure
 
 Run Parallel Test:
 pytest -n auto --dist loadfile  --html=reports/basic-report.html  --alluredir=reports ./tests -v -s

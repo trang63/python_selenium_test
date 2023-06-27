@@ -1,6 +1,3 @@
-import inspect
-import logging
-
 import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -12,31 +9,15 @@ import logging.config
 
 @pytest.mark.usefixtures("setup")
 class BaseClass:
-
     # Load the logging configuration from the file
     logging.config.fileConfig('logging_config.ini')
     log = logging.getLogger("mylogger")
 
-    def getLogger_old(self):
-        loggerName = inspect.stack()[1][3]
-        print("this is logger nameeeeee {}".format(loggerName))
-        logger = logging.getLogger(loggerName)
-        fileHandler = logging.FileHandler('log/logfile.log')
-        formatter = logging.Formatter("%(asctime)s :%(levelname)s : %(name)s :%(message)s")
-        fileHandler.setFormatter(formatter)
-
-        logger.addHandler(fileHandler)  # filehandler object
-
-        logger.setLevel(logging.DEBUG)
-        logger.info("this is logger nameeeeee {}".format(loggerName))
-        return logger
-
     def getLogger(self):
         return self.log
 
-
     def verifyLinkPresence(self, text):
-        element = WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.LINK_TEXT, text)))
 
     def wait_for_element_appear(self, locator):
