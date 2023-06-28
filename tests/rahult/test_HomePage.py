@@ -1,13 +1,12 @@
 import pytest
-
-from TestData.HomePageData import HomePageData
-from pageObjects.Sample.HomePage import HomePage
 from utilities.BaseClass import BaseClass
+from pageObjects.Sample.HomePage import HomePage
 
 
 class TestHomePage(BaseClass):
 
-    def test_formSubmission(self, getData):
+    @pytest.mark.usefixtures("getData")
+    def test_formSubmission(self,getData):
         log = self.getLogger()
         homepage = HomePage(self.driver)
         log.info("first name is " + getData["firstname"])
@@ -15,7 +14,6 @@ class TestHomePage(BaseClass):
         homepage.getEmail().send_keys(getData["lastname"])
         homepage.getCheckBox().click()
         self.selectOptionByText(homepage.getGender(), getData["gender"])
-
         homepage.submitForm().click()
 
         alertText = homepage.getSuccessMessage().text
@@ -23,6 +21,3 @@ class TestHomePage(BaseClass):
         assert ("Success" in alertText)
         self.driver.refresh()
 
-    @pytest.fixture(params=HomePageData.getAllTestData())
-    def getData(self, request):
-        return request.param
