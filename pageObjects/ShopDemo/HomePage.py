@@ -11,7 +11,7 @@ class HomePage(CommonPage):
     searchInput = (By.XPATH, "//input[@name='s']")
     productTitleList = (By.XPATH, "//div[contains(@class,'product-inner')]//h3/a")
     productFirst = (By.XPATH, "(//div[contains(@class,'product-inner')]//h3/a)[1]")
-
+    addedMessage = (By.XPATH,"//div[contains(@class,'notices') and contains(normalize-space(),'been added to your cart')]")
     cartInfo = (By.XPATH, "//span[@class='cart-name-and-total']")
     cartIcon = (By.XPATH, "//i[@class='icon_bag_alt']")
 
@@ -39,5 +39,6 @@ class HomePage(CommonPage):
 
     @allure.step("Go to cart")
     def goToCart(self):
+        self.wait_for_element_appear(HomePage.addedMessage)
         self.driver.find_element(*HomePage.cartIcon).click()
         return CheckoutPage(self.driver)
