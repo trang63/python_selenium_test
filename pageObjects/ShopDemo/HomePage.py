@@ -40,5 +40,6 @@ class HomePage(CommonPage):
     @allure.step("Go to cart")
     def goToCart(self):
         self.wait_for_element_appear(HomePage.addedMessage)
+        self.wait_for_element_appear(HomePage.cartIcon)
         self.driver.find_element(*HomePage.cartIcon).click()
         return CheckoutPage(self.driver)
