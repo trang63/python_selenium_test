@@ -26,4 +26,5 @@ class DataUtilities:
                 for j in range(2, sheet.max_column + 1):  # to get columns
                     Dict[sheet.cell(row=1, column=j).value] = sheet.cell(row=i, column=j).value
                 ListData.append(Dict)
+        print(ListData)
         return ListData

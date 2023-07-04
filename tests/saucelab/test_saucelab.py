@@ -1,12 +1,14 @@
+import allure
 import pytest
 from pageObjects.SauceDemo.HomePage import HomePage
-from utilities.BaseClass import BaseClass
+from utilities.BaseTest import BaseTest
 
 
-class TestHomeTask(BaseClass):
+class TestSauceLab(BaseTest):
 
+    @allure.title("Test End To End")
     @pytest.mark.smoke
-    def test_home_2(self):
+    def test_1(self):
         log = self.getLogger()
         homePage = HomePage(self.driver)
         homePage.logIn()
@@ -14,8 +16,10 @@ class TestHomeTask(BaseClass):
         homePage.addToCart()
         log.info("add to cart")
         checkoutPage = homePage.checkCart()
+        checkoutPage.verifyCart()
         log.info("check cart")
         checkoutPage.checkout()
+        checkoutPage.verifyCheckoutSuccess()
         log.info("checkout successfully")
 
 

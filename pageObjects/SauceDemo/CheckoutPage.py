@@ -1,16 +1,9 @@
+from pageObjects.Common.CommonPage import CommonPage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import allure
 
 
-from pageObjects.SauceDemo.CommonPage import CommonPage as Page
-
-
-class CheckoutPage(Page):
-
-    def __init__(self, driver):
-        super().__init__(driver)
-
+class CheckoutPage(CommonPage):
     checkoutBtn = (By.XPATH, "//button[@data-test='checkout']")
     firstname = (By.XPATH, "//input[@data-test='firstName']")
     lastname = (By.XPATH, "//input[@data-test='lastName']")
@@ -19,13 +12,25 @@ class CheckoutPage(Page):
     finishBtn = (By.XPATH, "//button[@data-test='finish']")
     completeMsg = (By.XPATH, "//*[@class='title']")
 
-    # gender= (By.ID, "exampleFormControlSelect1")
-    # submit = (By.XPATH, "//input[@value='Submit']")
-    # successMessage = (By.CSS_SELECTOR, "[class*='alert-success']")
+    productName = 'Sauce Labs Backpack'
+    price = '$29.99'
+    cartProductName = (By.CSS_SELECTOR, '.inventory_item_name')
+    cartProductPrice = (By.CSS_SELECTOR, '.inventory_item_price')
+    cartBadge = (By.XPATH, "//span[@class='shopping_cart_badge']")
+
+    def __init__(self, driver):
+        self.driver = driver
 
     def checkCartItems(self):
         pass
 
+    def verifyCart(self):
+        self.wait_for_element_appear(CheckoutPage.checkoutBtn)
+        assert int(self.driver.find_element(*CheckoutPage.cartBadge).text) == 1
+        assert self.driver.find_element(*CheckoutPage.cartProductName).text == CheckoutPage.productName
+        assert self.driver.find_element(*CheckoutPage.cartProductPrice).text == CheckoutPage.price
+
+    @allure.step("Finish Checkout")
     def checkout(self):
         self.driver.find_element(*CheckoutPage.checkoutBtn).click()
         self.wait_for_element_appear(CheckoutPage.continueBtn)
@@ -36,4 +41,6 @@ class CheckoutPage(Page):
         self.driver.implicitly_wait(10)
         self.wait_for_element_appear(CheckoutPage.finishBtn)
         self.driver.find_element(*CheckoutPage.finishBtn).click()
+
+    def verifyCheckoutSuccess(self):
         assert str(self.driver.find_element(*CheckoutPage.completeMsg).text) == "Checkout: Complete!"
