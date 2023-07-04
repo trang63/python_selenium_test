@@ -1,10 +1,12 @@
+import allure
 import pytest
 from pageObjects.ShopDemo.HomePage import HomePage
-from utilities.BaseClass import BaseClass
+from utilities.BaseTest import BaseTest
 
 
-class TestHomeTask3(BaseClass):
+class TestShopDemoPage(BaseTest):
 
+    @allure.title("End To End Test ShopDemo Page")
     @pytest.mark.smoke
     def test_add_item_to_cart_successfully(self):
         log = self.getLogger()
@@ -20,8 +22,11 @@ class TestHomeTask3(BaseClass):
         homePage.goToCart()
         log.info("check cart")
         checkoutPage.checkout()
-        log.info("checkout successfully")
+        log.info("checkout")
+        checkoutPage.verifyCheckoutSuccess()
+        log.info("Verify checkout successfully")
 
+    @allure.title("Additional Test ShopDemo Page")
     @pytest.mark.random
     def test_add_multiple_item_to_cart_successfully(self):
         log = self.getLogger()
@@ -36,7 +41,9 @@ class TestHomeTask3(BaseClass):
         log.info("add to cart the item")
         homePage.goToCart()
         log.info("check cart")
-        checkoutPage.updateShoppingCart()
+        beforeQuantity = checkoutPage.updateShoppingCartByIncreaseQuantity()
+        log.info("update shopping cart")
+        checkoutPage.verifyUpdateSuccessByIncreaseQuantity(beforeQuantity)
         log.info("update successfully")
 
 

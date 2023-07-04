@@ -22,6 +22,8 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="function")
 def setup(request):
+    """Fixtest for all Test"""
+    print("Start setup.....")
     global driver
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
@@ -40,9 +42,17 @@ def setup(request):
     request.cls.driver = driver
     yield
     driver.close()
+    print("Finish setup.....")
 
 
-# @pytest.mark.hookwrapper (deprecated so use below instead)
+@pytest.fixture(scope="session")
+def setupOtherConnection(request):
+    """Fixtest for all Test"""
+    print("Start establish connection.....")
+    yield
+    print("Finish establish connection.....")
+
+
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
     """
@@ -55,17 +65,18 @@ def pytest_runtest_makereport(item):
     extra = getattr(report, 'extra', [])
 
     if report.when == 'call' or report.when == "setup":
-        current_directory = os.getcwd()
         timestamp = int(time.time() * 1000)
         xfail = hasattr(report, 'wasxfail')
         if (report.skipped and xfail) or (report.failed and not xfail):
-            folder_dir = os.path.dirname(item.config.option.htmlpath)
-            file_name = report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
-            _capture_screenshot(folder_dir + "/" + file_name)
-            if file_name:
-                html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
-                       'onclick="window.open(this.src)" align="right"/></div>' % file_name
-                extra.append(pytest_html.extras.html(html))
+            print("There' not Passed test so start hook............")
+            if item.config.option.htmlpath is not None:
+                folder_dir = os.path.dirname(item.config.option.htmlpath)
+                file_name = report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
+                _capture_screenshot(folder_dir + "/" + file_name)
+                if file_name:
+                    html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
+                           'onclick="window.open(this.src)" align="right"/></div>' % file_name
+                    extra.append(pytest_html.extras.html(html))
 
             allure.attach(
                 driver.get_screenshot_as_png(),
