@@ -37,7 +37,6 @@ class CommonPage:
         sel.select_by_visible_text(text)
 
     def get_current_url(self):
-        print("HELLLOOOOOO " + self.driver.current_url)
         return self.driver.current_url
 
     def jvClick(self,locator):

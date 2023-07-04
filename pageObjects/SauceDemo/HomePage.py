@@ -32,6 +32,5 @@ class HomePage(CommonPage):
 
     @allure.step("Checkout product")
     def checkCart(self):
-        print("Number Of product in cast {}".format(self.driver.find_element(*HomePage.cartBadge).text))
         self.driver.find_element(*HomePage.cartBtn).click()
         return CheckoutPage(self.driver)
