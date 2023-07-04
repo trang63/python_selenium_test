@@ -20,7 +20,7 @@ class HomePage(CommonPage):
 
     @allure.step("Open webpage")
     def goToPage(self):
-        self.driver.to("https://shop.demoqa.com/")
+        self.driver.get("https://shop.demoqa.com/")
         self.driver.maximize_window()
 
     @allure.step("Search product {search_str}")
