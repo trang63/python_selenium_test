@@ -48,7 +48,6 @@ jobs:
         mkdir reports/history
         cp -R destination-repo/allure-history/* reports/history
         allure generate reports -o reports_allure
-
         sudo systemsetup -settimezone "Asia/Ho_Chi_Minh"
         current_date=$(date +%Y-%m-%d)
         current_time=$(date +%H-%M-%S)
@@ -67,13 +66,11 @@ jobs:
         cd destination-repo
         git config --global user.name "${{ secrets.GIT_NAME }}"
         git config --global user.email "${{ secrets.GIT_EMAIL }}"
-
     - name: Upload Allure report to Webpage
       if: success() || failure()
         git add .
         git commit -m "Upload Allure Report"
         git push https://${{ secrets.ACCESS_KEY }}@github.com/${{ secrets.GIT_NAME }}/allure_report.git
-
     - name: Notify slack
       if: success() || failure()
       uses: slackapi/slack-github-action@v1.24.0
