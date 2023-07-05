@@ -63,12 +63,12 @@ jobs:
         echo "color=#ff0000" >> $GITHUB_ENV
         echo "test_status=Fail" >> $GITHUB_ENV
         fi
-        cd destination-repo
-        git config --global user.name "${{ secrets.GIT_NAME }}"
-        git config --global user.email "${{ secrets.GIT_EMAIL }}"
     - name: Upload Allure report to Webpage
       if: success() || failure()
       run: |
+        cd destination-repo
+        git config --global user.name "${{ secrets.GIT_NAME }}"
+        git config --global user.email "${{ secrets.GIT_EMAIL }}"      
         git add .
         git commit -m "Upload Allure Report"
         git push https://${{ secrets.ACCESS_KEY }}@github.com/${{ secrets.GIT_NAME }}/allure_report.git
