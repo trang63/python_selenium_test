@@ -1,7 +1,7 @@
 import allure
 import pytest
 from selenium import webdriver
-import time
+import datetime
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -22,7 +22,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="function")
 def setup(request):
-    """Fixtest for all Test"""
+    """Fixture for all Test"""
     global driver
     browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
@@ -37,7 +37,6 @@ def setup(request):
         driver = webdriver.Edge(
             service=EdgeService(EdgeChromiumDriverManager().install())
         )
-
     request.cls.driver = driver
     yield
     driver.close()
@@ -57,29 +56,30 @@ def pytest_runtest_makereport(item):
         """
     pytest_html = item.config.pluginmanager.getplugin('html')
     outcome = yield
-    report = outcome.get_result()
-    extra = getattr(report, 'extra', [])
+    result = outcome.get_result()
+    extra = getattr(result, 'extra', [])
 
-    if report.when == 'call' or report.when == "setup":
-        timestamp = int(time.time() * 1000)
-        xfail = hasattr(report, 'wasxfail')
-        if (report.skipped and xfail) or (report.failed and not xfail):
+    if result.when == 'call' or result.when == "setup":
+        timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        xfail = hasattr(result, 'wasxfail')
+        if (result.skipped and xfail) or (result.failed and not xfail):
+            # Attach screenshot to html-report
             if item.config.option.htmlpath is not None:
                 folder_dir = os.path.dirname(item.config.option.htmlpath)
-                file_name = report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp) + ".png"
+                file_name = item.nodeid.split("::")[-1] + timestamp + ".png"
+                os.makedirs(folder_dir, exist_ok=True)
                 _capture_screenshot(folder_dir + "/" + file_name)
                 if file_name:
                     html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
                            'onclick="window.open(this.src)" align="right"/></div>' % file_name
                     extra.append(pytest_html.extras.html(html))
+                result.extra = extra
 
+            # Attach screenshot to Allure report
             allure.attach(
                 driver.get_screenshot_as_png(),
-                name=report.nodeid.replace("::", "_").replace("/", "_") + str(timestamp),
+                name=result.nodeid.replace("::", "_").replace("/", "_") + str(timestamp),
                 attachment_type=allure.attachment_type.PNG)
-
-        report.extra = extra
-
 
 def _capture_screenshot(name):
     driver.get_screenshot_as_file(name)

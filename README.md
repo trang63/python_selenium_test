@@ -10,6 +10,45 @@
   * Upload Allure report to Github Page (Web server)
   * Slack message
 
+### Project Structure
+```
+.
+├── README.md
+├── .github
+│   └── workflows
+│       └── test_workflow.yml
+├── pageObjects
+│   ├── Common
+│   │   ├── CommonPage.py
+│   │   ├── __init__.py
+│   ├── PagesOnTest
+│   │   ├── Page1.py
+│   │   ├── Page2.py
+│   │   └── __init__.py
+│   └── __init__.py
+├── tests
+│   ├── __init__.py
+│   ├── conftest.py
+│   ├── Test1_WithData
+│   │   ├── TestData
+│   │   ├── __init__.py
+│   │   ├── conftest.py
+│   │   └── test_1.py
+│   └── Test2
+│       ├── __init__.py
+│       └── test_2.py
+├── utilities
+│    ├── BaseTest.py
+│    ├── DataUtils.py
+│    └──__init__.py
+├── config
+│   ├── __init__.py
+│   ├── customFormat.py
+│   └── logging.ini
+│── pytest.ini
+└── requirements.txt
+```
+
 ### Run Test in Local machine ###
 **_Install Package:_** <br>
 `pip install -r requirement.txt
@@ -28,13 +67,12 @@
 `
 
 **_View Allure report by:_** <br>
-+ allure serve reports <br>
-OR
-+ allure generate reports  -o reports_allure
+`allure serve reports` <br>
+OR <br>
+`allure generate reports  -o reports_allure`
 
 **_Run Parallel Test:_** <br>
-`pytest -n auto --dist loadfile  --html=reports/basic-report.html -v -s ` <br>
-OR
-
-`pytest -n auto --dist loadfile --alluredir=allure-reports ./tests -v -s
+Generate Pytest-html report: `pytest -n auto --dist loadfile  --html=reports/basic-report.html -v -s ` <br>
+OR <br>
+Generate Allure report: `pytest -n auto --dist loadfile --alluredir=allure-reports ./tests -v -s
 `
