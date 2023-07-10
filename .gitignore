@@ -8,3 +8,4 @@ reports_allure/
 venv/
 *.log
 template_python_selenium.iml
+__pycache__/
