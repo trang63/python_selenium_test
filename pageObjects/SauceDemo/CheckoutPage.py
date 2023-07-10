@@ -43,4 +43,4 @@ class CheckoutPage(CommonPage):
         self.driver.find_element(*CheckoutPage.finishBtn).click()
 
     def verifyCheckoutSuccess(self):
-        assert str(self.driver.find_element(*CheckoutPage.completeMsg).text) == "Checkout: Complete!..."
+        assert str(self.driver.find_element(*CheckoutPage.completeMsg).text) == "Checkout: Complete!"
