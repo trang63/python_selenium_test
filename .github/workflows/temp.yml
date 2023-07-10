@@ -51,11 +51,12 @@ jobs:
       - name: Upload Allure report to Webpage
         if: success() || failure()
         run: |
-          echo "GIT_NAME=${{ secrets.GIT_NAME }}" 
-          echo "GIT_EMAIL=${{ secrets.GIT_EMAIL }}" 
-          echo "GIT_ACCESS_KEY=${{ secrets.ACCESS_KEY }}" 
-          chmod +x .github/scripts/upload_allure_report.sh
-          .github/scripts/upload_allure_report.sh
+          cd destination-repo
+          git config --global user.name "${{ secrets.GIT_NAME }}"
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"      
+          git add .
+          git commit -m "Upload Allure Report"
+          git push https://${{ secrets.ACCESS_KEY }}@github.com/${{ secrets.GIT_NAME }}/allure_report.git
       - name: Notify slack
         if: success() || failure()
         uses: slackapi/slack-github-action@v1.24.0
