@@ -10,7 +10,7 @@ mkdir "destination-repo/$folder_name"
 cp -R ./reports_allure/* "destination-repo/$folder_name"
 echo "folder_name=$folder_name" >> $GITHUB_ENV
 echo "current_datetime=$(date +'%Y-%m-%d %H:%M:%S (%Z)')" >> $GITHUB_ENV
-if [ "${{ steps.test.outcome }}" = "success" ]; then
+if [ "$TEST_OUTCOME" = "success" ]; then
 echo "color=#36a64f" >> $GITHUB_ENV
 echo "test_status=Pass" >> $GITHUB_ENV
 else

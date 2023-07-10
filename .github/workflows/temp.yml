@@ -40,15 +40,20 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         id: test
-        run: pytest -n auto --dist loadfile  --alluredir=reports ./tests
+        run: |
+          pytest -n auto --dist loadfile  --alluredir=reports ./tests
       - name: Generate Allure Report
         if: success() || failure()
         run: |
+          echo "TEST_OUTCOME=${{ steps.test.outcome }}" 
           chmod +x .github/scripts/generate_allure_report.sh
           .github/scripts/generate_allure_report.sh
       - name: Upload Allure report to Webpage
         if: success() || failure()
         run: |
+          echo "GIT_NAME=${{ secrets.GIT_NAME }}" 
+          echo "GIT_EMAIL=${{ secrets.GIT_EMAIL }}" 
+          echo "GIT_ACCESS_KEY=${{ secrets.GIT_ACCESS_KEY }}" 
           chmod +x .github/scripts/upload_allure_report.sh
           .github/scripts/upload_allure_report.sh
       - name: Notify slack
