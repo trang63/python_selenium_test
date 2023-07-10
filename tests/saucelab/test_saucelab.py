@@ -9,6 +9,7 @@ class TestSauceLab(BaseTest):
     @allure.title("Test End To End")
     @pytest.mark.smoke
     def test_1(self):
+        """ Docstring for test 1"""
         log = self.getLogger()
         homePage = HomePage(self.driver)
         homePage.logIn()
