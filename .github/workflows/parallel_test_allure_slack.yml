@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  selenium-pytest:
 
     runs-on: macos-latest
 
