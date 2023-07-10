@@ -46,6 +46,7 @@ jobs:
         if: success() || failure()
         run: |
           echo "TEST_OUTCOME=${{ steps.test.outcome }}" 
+          git clone "${{ secrets.ALLURE_WEB_REPO }}" destination-repo
           chmod +x .github/scripts/generate_allure_report.sh
           .github/scripts/generate_allure_report.sh
       - name: Upload Allure report to Webpage

@@ -1,4 +1,3 @@
-git clone https://github.com/trang63/allure_report.git destination-repo
 mkdir reports/history
 cp -R destination-repo/allure-history/* reports/history
 allure generate reports -o reports_allure
