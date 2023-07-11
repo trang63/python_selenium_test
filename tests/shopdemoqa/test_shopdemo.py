@@ -7,7 +7,7 @@ from utilities.BaseTest import BaseTest
 class TestShopDemoPage(BaseTest):
     @allure.title("End To End Test ShopDemo Page")
     @pytest.mark.regression
-    @pytest.mark.parametrize("search_item", ["mini dress"])
+    @pytest.mark.parametrize("search_item", ["maxi dress"])
     def test_add_item_to_cart_successfully(self,search_item):
         log = self.getLogger()
         homePage = HomePage(self.driver)
