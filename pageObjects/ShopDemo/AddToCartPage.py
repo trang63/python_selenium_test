@@ -18,7 +18,7 @@ class AddToCartPage(CommonPage):
     def addToCart(self):
         self.wait_for_element_appear(AddToCartPage.addToWishList)
         self.wait_for_element_appear(AddToCartPage.colorOption)
-        self.wait_appear(AddToCartPage.sizeOption)
+        self.wait_for_element_appear(AddToCartPage.sizeOption)
         colorSel = Select(self.driver.find_element(*AddToCartPage.colorOption))
         colorSel.select_by_index(1)
         sizeSel = Select(self.driver.find_element(*AddToCartPage.sizeOption))
