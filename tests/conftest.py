@@ -44,7 +44,7 @@ def setup(request):
 
 @pytest.fixture(scope="session")
 def setupOtherConnection(request):
-    """Fixtest for all Test"""
+    """Fixture for all Test"""
     pass
 
 
@@ -53,7 +53,7 @@ def pytest_runtest_makereport(item):
     """
         Extends the PyTest Plugin to take and embed screenshot in html report, whenever test fails.
         :param item:
-        """
+    """
     pytest_html = item.config.pluginmanager.getplugin('html')
     outcome = yield
     result = outcome.get_result()

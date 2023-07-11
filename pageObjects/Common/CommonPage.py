@@ -11,12 +11,17 @@ class CommonPage:
     logging.config.fileConfig('config/logging.ini')
     log = logging.getLogger("mylogger")
 
+    def __init__(self, driver):
+        self.driver = driver
+
     def getLogger(self):
         return self.log
 
     def verifyLinkPresence(self, text):
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.LINK_TEXT, text)))
+        try:
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, text)))
+        except TimeoutException:
+            raise Exception(f"No link '{text}' presence in this page")
 
     def wait_for_element_appear(self, locator):
         try:

@@ -5,15 +5,15 @@ from utilities.BaseTest import BaseTest
 
 
 class TestShopDemoPage(BaseTest):
-
     @allure.title("End To End Test ShopDemo Page")
-    @pytest.mark.smoke
-    def test_add_item_to_cart_successfully(self):
+    @pytest.mark.regression
+    @pytest.mark.parametrize("search_item", ["mini dress"])
+    def test_add_item_to_cart_successfully(self,search_item):
         log = self.getLogger()
         homePage = HomePage(self.driver)
         homePage.goToPage()
         log.info("Open Page")
-        homePage.search("mini dress")
+        homePage.search(search_item)
         log.info("search item")
         addToCartPage = homePage.chooseProduct()
         log.info("choose item")
@@ -27,7 +27,7 @@ class TestShopDemoPage(BaseTest):
         log.info("Verify checkout successfully")
 
     @allure.title("Additional Test ShopDemo Page")
-    @pytest.mark.random
+    @pytest.mark.smoke
     def test_add_multiple_item_to_cart_successfully(self):
         log = self.getLogger()
         homePage = HomePage(self.driver)

@@ -16,7 +16,7 @@ class HomePage(CommonPage):
     cartBtn = (By.XPATH, "//a[@class='shopping_cart_link']")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     @allure.step("Opening main page")
     def logIn(self):

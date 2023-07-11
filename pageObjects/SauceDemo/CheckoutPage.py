@@ -19,7 +19,7 @@ class CheckoutPage(CommonPage):
     cartBadge = (By.XPATH, "//span[@class='shopping_cart_badge']")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def checkCartItems(self):
         pass

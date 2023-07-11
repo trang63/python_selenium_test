@@ -7,7 +7,7 @@ class Step2Page(CommonPage):
     city = (By.ID, "city")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     @allure.step("Submit Form with data")
     def verifyAtStep2(self):
