@@ -7,6 +7,7 @@ current_time=$(date +%H-%M-%S)
 folder_name="report_${current_date}_${current_time}"
 mkdir "destination-repo/$folder_name"
 cp -R ./reports_allure/* "destination-repo/$folder_name"
+cp -rf ./reports_allure/history/* destination-repo/allure-history
 echo "folder_name=$folder_name" >> $GITHUB_ENV
 echo "current_datetime=$(date +'%Y-%m-%d %H:%M:%S (%Z)')" >> $GITHUB_ENV
 if [ "$1" = "success" ]; then
