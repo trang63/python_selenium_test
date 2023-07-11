@@ -12,17 +12,16 @@ class AddToCartPage(CommonPage):
     addToWishList = (By.XPATH, "//div[contains(@class,'summary')]//a[@data-title='Add to Wishlist']")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     @allure.step("Add product to Cart")
     def addToCart(self):
         self.wait_for_element_appear(AddToCartPage.addToWishList)
         self.wait_for_element_appear(AddToCartPage.colorOption)
-        self.wait_for_element_appear(AddToCartPage.sizeOption)
+        self.wait_appear(AddToCartPage.sizeOption)
         colorSel = Select(self.driver.find_element(*AddToCartPage.colorOption))
-        colorSel.select_by_value("white")
+        colorSel.select_by_index(1)
         sizeSel = Select(self.driver.find_element(*AddToCartPage.sizeOption))
-        sizeSel.select_by_value("large")
+        sizeSel.select_by_index(1)
         self.driver.find_element(*AddToCartPage.addToCartBtn).click()
         return CheckoutPage(self.driver)
-

@@ -10,5 +10,5 @@ data_file_path = "{}/TestData/{}.xlsx".format(current_directory, DATA_FILE_NAME)
 
 @pytest.fixture(params=DataUtilities.getAllTestData(data_file_path))
 def getData(request):
-    """Fixtest for each Feature Test - Getdata"""
+    """Fixture for each Feature Test - Getdata"""
     return request.param

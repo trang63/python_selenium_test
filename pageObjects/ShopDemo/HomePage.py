@@ -16,7 +16,7 @@ class HomePage(CommonPage):
     cartIcon = (By.XPATH, "//i[@class='icon_bag_alt']")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     @allure.step("Open webpage")
     def goToPage(self):

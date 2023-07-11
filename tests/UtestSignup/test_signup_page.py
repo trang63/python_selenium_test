@@ -5,10 +5,9 @@ from pageObjects.UtestSignUp.Step1Page import Step1Page
 
 
 class TestUtestPage(BaseTest):
-
     @allure.title("Test Signup Page")
     @pytest.mark.usefixtures("getData")
-    def test_SignUp(self,getData):
+    def test_SignUp(self, getData):
         log = self.getLogger()
         firstName = getData["firstname"]
         lastName = getData["lastname"]
@@ -21,6 +20,4 @@ class TestUtestPage(BaseTest):
         step1Page.openPage()
         log.info("Submit form with data")
         step2Page = step1Page.submitFormWithData(firstName, lastName, email, birthMonth, birthDay, birthYear, language)
-        # pytest.set_trace()
         step2Page.verifyAtStep2()
-

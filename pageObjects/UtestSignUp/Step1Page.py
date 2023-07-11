@@ -20,7 +20,7 @@ class Step1Page(CommonPage):
     languageChoice = "//*[@placeholder='Add languages']//span[text()='{}']"
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     @allure.step("Open Signup Page")
     def openPage(self):

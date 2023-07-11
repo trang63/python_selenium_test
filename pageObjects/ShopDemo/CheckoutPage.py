@@ -13,7 +13,7 @@ class CheckoutPage(CommonPage):
     updateCartBtn = (By.XPATH, "//input[@name='update_cart']")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def checkCartItems(self):
         pass
