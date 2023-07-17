@@ -32,14 +32,11 @@ class HomePage(CommonPage):
 
     @allure.step("Choose a product")
     def chooseProduct(self):
-        self.driver.implicitly_wait(2000)
-        self.wait_for_element_appear(HomePage.productFirst)
-        self.driver.find_element(*HomePage.productFirst).click()
+        self.wait_for_element_appear(HomePage.productFirst).click()
         return AddToCartPage(self.driver)
 
     @allure.step("Go to cart")
     def goToCart(self):
         self.wait_for_element_appear(HomePage.addedMessage)
-        self.wait_for_element_appear(HomePage.cartIcon)
-        self.driver.find_element(*HomePage.cartIcon).click()
+        self.wait_for_element_appear(HomePage.cartIcon).click()
         return CheckoutPage(self.driver)
