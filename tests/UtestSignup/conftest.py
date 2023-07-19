@@ -1,5 +1,5 @@
 import pytest
-from utilities.DataUtils import DataUtilities
+from utilities.dataUtils import DataUtilities
 import os
 
 # Get the current script file's directory

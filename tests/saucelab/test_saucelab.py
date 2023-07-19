@@ -1,7 +1,7 @@
 import allure
 import pytest
 from pageObjects.SauceDemo.HomePage import HomePage
-from utilities.BaseTest import BaseTest
+from tests.baseTest import BaseTest
 
 
 class TestSauceLab(BaseTest):

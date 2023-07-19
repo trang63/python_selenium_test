@@ -29,6 +29,7 @@
 ├── tests
 │   ├── __init__.py
 │   ├── conftest.py
+│   ├── baseTest.py
 │   ├── Test1_WithData
 │   │   ├── TestData
 │   │   ├── __init__.py
@@ -38,7 +39,6 @@
 │       ├── __init__.py
 │       └── test_2.py
 ├── utilities
-│    ├── BaseTest.py
 │    ├── DataUtils.py
 │    └──__init__.py
 ├── config

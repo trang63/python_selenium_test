@@ -1,6 +1,6 @@
 import allure
 import pytest
-from utilities.BaseTest import BaseTest
+from tests.baseTest import BaseTest
 from pageObjects.UtestSignUp.Step1Page import Step1Page
 
 

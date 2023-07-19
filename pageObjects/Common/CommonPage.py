@@ -25,7 +25,7 @@ class CommonPage:
 
     def wait_for_element_appear(self, locator):
         try:
-            element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator))
+            element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
             return element
         except TimeoutException:
             raise TimeoutException(f"Element with locator '{locator}' did not  appear within the given timeout.")

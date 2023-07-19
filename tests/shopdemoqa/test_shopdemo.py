@@ -1,7 +1,7 @@
 import allure
 import pytest
 from pageObjects.ShopDemo.HomePage import HomePage
-from utilities.BaseTest import BaseTest
+from tests.baseTest import BaseTest
 
 
 class TestShopDemoPage(BaseTest):

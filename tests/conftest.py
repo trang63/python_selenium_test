@@ -33,10 +33,12 @@ def setup(request):
         driver = webdriver.Firefox(
             service=FirefoxService(GeckoDriverManager().install())
         )
-    elif browser_name == "Edge":
+    elif browser_name == "edge":
         driver = webdriver.Edge(
             service=EdgeService(EdgeChromiumDriverManager().install())
         )
+    else :
+        raise Exception("Invalid browser specified!")
     request.cls.driver = driver
     yield
     driver.close()
@@ -59,7 +61,7 @@ def pytest_runtest_makereport(item):
     result = outcome.get_result()
     extra = getattr(result, 'extra', [])
 
-    if result.when == 'call' or result.when == "setup":
+    if (result.when == 'call' or result.when == "setup") and driver is not None:
         timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         xfail = hasattr(result, 'wasxfail')
         if (result.skipped and xfail) or (result.failed and not xfail):
