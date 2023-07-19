@@ -1,3 +1,5 @@
+import time
+
 import allure
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
@@ -38,6 +40,6 @@ class HomePage(CommonPage):
 
     @allure.step("Go to cart")
     def goToCart(self):
-        self.wait_for_element_appear(HomePage.addedMessage)
-        self.wait_for_element_appear(HomePage.cartBtn).click()
+        time.sleep(2)
+        self.jvClick(HomePage.cartBtn)
         return CheckoutPage(self.driver)
