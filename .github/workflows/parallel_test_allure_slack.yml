@@ -5,7 +5,11 @@ name: Run parallel test with Allure report and Notify Slack
 
 on:
   workflow_dispatch:
-
+    inputs:
+      browser:
+        description: 'Select the browser'
+        required: false
+        default: 'chrome'  # Provide the default value here
 
 permissions:
   contents: read
@@ -14,6 +18,10 @@ jobs:
   selenium-pytest:
 
     runs-on: macos-latest
+
+    strategy:
+      matrix:
+        browser: ${{ github.event.inputs.browser || 'chrome' }}  # Use the input value if provided, otherwise use the default value 'chrome'
 
     steps:
       - uses: actions/checkout@v3
@@ -41,7 +49,7 @@ jobs:
       - name: Test with pytest
         id: test
         run: |
-          pytest -n auto --dist loadfile  --alluredir=reports ./tests
+          pytest -n auto --browser_name="${{ matrix.browser }}" --dist loadfile  --alluredir=reports ./tests
       - name: Generate Allure Report
         if: success() || failure()
         run: |
