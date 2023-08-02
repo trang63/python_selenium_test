@@ -17,6 +17,7 @@ class HomePage(CommonPage):
     cartInfo = (By.XPATH, "//span[@class='cart-name-and-total']")
     cartIcon = (By.XPATH, "//i[@class='icon_bag_alt']")
     cartBtn = (By.CSS_SELECTOR, "a.cart-button")
+    removeForm = (By.CSS_SELECTOR, "div.remove-form")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -35,6 +36,7 @@ class HomePage(CommonPage):
 
     @allure.step("Choose a product")
     def chooseProduct(self):
+        self.wait_for_element_disappear(HomePage.removeForm)
         self.wait_for_element_appear(HomePage.productFirst).click()
         return AddToCartPage(self.driver)
 
