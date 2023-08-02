@@ -19,11 +19,10 @@ jobs:
 
     runs-on: macos-latest
 
-    strategy:
-      matrix:
-        browser: ${{ github.event.inputs.browser || 'chrome' }}  # Use the input value if provided, otherwise use the default value 'chrome'
-
-    steps:
+    env:
+      BROWSER: ${{ github.event.inputs.browser || 'chrome' }} 
+        
+    steps:  
       - uses: actions/checkout@v3
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
@@ -49,7 +48,7 @@ jobs:
       - name: Test with pytest
         id: test
         run: |
-          pytest -n auto --browser_name="${{ matrix.browser }}" --dist loadfile  --alluredir=reports ./tests
+          pytest -n auto --browser_name="${{ env.BROWSER }}" --dist loadfile  --alluredir=reports ./tests
       - name: Generate Allure Report
         if: success() || failure()
         run: |
